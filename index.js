@@ -1,0 +1,14 @@
+const btnClick=()=>{
+    const username= document.getElementById("username")
+    const user=username.value
+    const password=document.getElementById("password")
+    const passwordvalue=password.value
+    
+    if (user=== "admin" && passwordvalue==="admin123") {
+            alert("login successful")
+            window.location.assign("home.html")
+    } else {
+        alert("login failed")
+        return;
+    }
+}
