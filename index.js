@@ -12,3 +12,17 @@ const btnClick=()=>{
         return;
     }
 }
+window.onload = () =>{
+    const allBtn = document.getElementById('btn-all');
+    if(allBtn) {
+        allBtn.classList.remove('btn-soft');
+    }
+};
+const BTNclick=(clickedbutton)=>{
+const allbutton = document.querySelectorAll(".btn")
+allbutton.forEach(btt => {
+  btt.classList.add("btn-soft")
+});
+clickedbutton.classList.remove("btn-soft")
+return;
+}
