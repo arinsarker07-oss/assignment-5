@@ -21,7 +21,7 @@ window.onload = () => {
 
 };
 const BTNclick = (clickedbutton) => {
-    const allbutton = document.querySelectorAll(".btn")
+    const allbutton = document.querySelectorAll(".btn-w")
     allbutton.forEach(btt => {
         btt.classList.add("btn-soft")
     });
@@ -34,34 +34,51 @@ fetch(url)
     .then((response) => response.json())
     .then((result) => displayLevelwords(result.data))
 
+
 const displayLevelwords = (words) => {
-     const allcardsection = document.getElementById("all-card-section")
-     allcardsection.innerHTML = ""
+    const allcardsection = document.getElementById("all-card-section");
+    allcardsection.innerHTML = "";
+
     words.forEach(word => {
-        const card = document.createElement("div")
+        console.log(word);
+        const card = document.createElement("div");
+        card.className = "h-full";
+        const isopen = word.status === 'open';
+        const color = isopen ? 'green' : 'purple';
+        const statusicon = isopen
+            ? `<div class="h-4 w-4 rounded-full border-2 border-dashed border-green-600"></div>`
+            : `<i class="fa-regular fa-circle-check text-lg text-purple-600"></i>`;
         card.innerHTML = `
-           <div class="card bg-base-100  shadow-sm ">
-  <figure class="flex justify-between p-5 ">
-  <div class="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center"><p class="border-2 border-dashed border-green-600 rounded-full h-4 w-4 "></p></div>
-   <div class="badge badge-error  badge-soft">HIGH</div>
-  </figure>
-
-  <div class="card-body">
-    <h2 class="card-title font-semibold text-[#1F2937]">
-      Fix navigation menu on mobile <br> devices
-    </h2>
-    <p class="text-[#64748B] text-[12px] ">The navigation menu doesn't collapse <br> properly on mobile devices...</p>
-    <div class="card-actions flex flex-row">
-      <div class="badge badge-error badge-soft"><i class="fa-solid fa-bug"></i>BUG</div>
-      <div class="badge badge-warning badge-soft"><i class="fa-solid fa-life-ring"></i>HELP WANTED</div>
-    </div>
-    <p class="border border-gray-300"></p>
-    <p class="text-[#64748B] text-[12px] ">#1by john_doe</p>
-    <p class="text-[#64748B] text-[12px] ">1/15/2024</p>
-  </div>
-</div> 
-        `
-        allcardsection.append(card)
+            <div class="card bg-white shadow-sm border-t-4 border-${color}-500 h-full">
+                <figure class="flex justify-between p-4 pb-2">
+                    <div class="h-7 w-7 rounded-full bg-${color}-100 flex items-center justify-center">
+                       ${statusicon}
+                    </div>
+                    <div class="badge badge-error badge-soft text-[10px] font-bold uppercase">${word.priority}</div>
+                </figure>
+                <div class="p-4 pt-0 space-y-2 flex-grow">
+                    <h2 class="card-title font-semibold text-[#1F2937] text-sm leading-tight">
+                        ${word.title}
+                    </h2>
+                    <p class="text-[#64748B] text-[11px] line-clamp-2">
+                        ${word.description}
+                    </p>
+                    <div class="card-actions flex-wrap gap-1 mt-3">
+                        <div class="badge badge-error badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
+                            <i class="fa-solid fa-bug"></i> BUG
+                        </div>
+                        <div class="badge badge-warning badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
+                           <i class="fa-solid fa-life-ring"></i>HELP WANTED
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 pt-0">
+                    <div class="border-t border-gray-100 my-2"></div>
+                    <p class="text-[#64748B] text-[11px]">#${word.id} by ${word.author}</p>
+                    <p class="text-[#64748B] text-[11px]">${new Date(word.createdAt).toLocaleDateString()}</p>
+                </div>
+            </div> 
+        `;
+        allcardsection.append(card);
     });
-
 }
