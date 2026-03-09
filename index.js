@@ -107,8 +107,9 @@ document.getElementById("issue-count").innerText = `${words.length} Issues`;
         }).join("");
 
 
+    card.style.cursor = "pointer";
         card.innerHTML = `
-            <div class="card bg-white shadow-sm border-t-4 border-${color}-500 h-full">
+            <div onclick=" document.getElementById('my_modal_1').showModal()" class="card bg-white shadow-sm border-t-4 border-${color}-500 h-full">
                 <figure class="flex justify-between p-4 pb-2">
                     <div class="h-7 w-7 rounded-full bg-${color}-100 flex items-center justify-center">
                        ${statusicon}
@@ -137,11 +138,15 @@ document.getElementById("issue-count").innerText = `${words.length} Issues`;
     });
 }
 
-document.getElementById("btn-Search").addEventListener("click",()=>{
-  const input=document.getElementById("input-Search")
-  const inputvalue= input.value.trim().toLowerCase();
-   const filterword=allIssues.filter((word)=>
-    word.title.toLowerCase().includes(inputvalue))
-     displayLevelwords(filterword)
-     return;
+document.getElementById("btn-Search").addEventListener("click", () => {
+    const input = document.getElementById("input-Search");
+    const searchText = input.value.toLowerCase();
+       if (searchText!=="") {
+         const searchUrl = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`;
+        fetch(searchUrl)
+            .then(res => res.json())
+            .then(result => {
+                displayLevelwords(result.data);
+            })
+       }
 });
