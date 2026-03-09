@@ -216,7 +216,7 @@ const showDetails = (id) => {
                         <div class="bg-slate-50/50 rounded-xl p-4 flex justify-between items-start">
                             <div class="flex flex-col gap-2">
                                 <span class="text-slate-400 text-lg">Assignee:</span>
-                                <span class="text-slate-800 font-bold text-xl">${issue.author}</span>
+                                <span class="text-slate-800 font-bold text-xl">${issue.assignee}</span>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <span class="text-slate-400 text-lg">Priority:</span>
