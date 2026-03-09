@@ -41,12 +41,25 @@ const BTNclick = (clickedbutton) => {
     }
 }
 
+const manageSpiner=(spin)=>{
+    if (spin===true) {
+        document.getElementById("spiner").classList.remove("hidden");
+        document.getElementById("all-card-section").classList.add("hidden");
+    }
+    else{
+         document.getElementById("all-card-section").classList.remove("hidden");
+        document.getElementById("spiner").classList.add("hidden");
+    }
+}
+
 const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues"
+ manageSpiner(true);
 fetch(url)
     .then((response) => response.json())
     .then((result) => {
         allIssues = result.data
         displayLevelwords(allIssues)
+          manageSpiner(false);
     })
 
 
@@ -144,11 +157,13 @@ document.getElementById("btn-Search").addEventListener("click", () => {
     const input = document.getElementById("input-Search");
     const searchText = input.value.toLowerCase();
     if (searchText !== "") {
+         manageSpiner(true);
         const searchUrl = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`;
         fetch(searchUrl)
             .then(res => res.json())
             .then(result => {
                 displayLevelwords(result.data);
+                 manageSpiner(false);
             })
     }
 });

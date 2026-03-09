@@ -44,16 +44,18 @@
                 </svg>
                 <input id="input-Search" type="search" required placeholder="Search issues..." />
             </label>
-            <button class="btn btn-primary" id="btn-Search"><span><i class="fa-solid fa-magnifying-glass"></i></span>Search</button>
+            <button class="btn btn-primary" id="btn-Search"><span><i
+                        class="fa-solid fa-magnifying-glass"></i></span>Search</button>
         </div>
     </div>
 
     <!-- btn-section -->
     <section class=" md:w-7/10 mx-auto w-full ">
         <div class="bg-base-100 shadow-sm justify-between mt-[60px] space-x-1 p-3 ">
-            <button onclick="BTNclick(this)" id="btn-all"  class="btn btn-w btn-primary btn-soft w-[70px]">all</button>
+            <button onclick="BTNclick(this)" id="btn-all" class="btn btn-w btn-primary btn-soft w-[70px]">all</button>
             <button onclick="BTNclick(this)" id="btn-open" class="btn btn-w btn-primary btn-soft w-[80px]">open</button>
-            <button onclick="BTNclick(this)" id="btn-close" class="btn btn-w btn-primary btn-soft w-[80px]">close</button>
+            <button onclick="BTNclick(this)" id="btn-close"
+                class="btn btn-w btn-primary btn-soft w-[80px]">close</button>
         </div>
     </section>
 
@@ -62,38 +64,40 @@
         <div class="bg-base-100 shadow-sm flex flex-col md:flex-row justify-between mt-[17px] space-x-1 p-3">
             <div class="flex items-center space-x-3 ">
                 <div class="rounded-full bg-[#ECE4FF] p-2">
-                <img class="h-9 w-9 " src="assets/Aperture.png" alt="">
+                    <img class="h-9 w-9 " src="assets/Aperture.png" alt="">
                 </div>
                 <div>
                     <a id="issue-count" class="font-semibold text-xl">0 Issues</a>
-                    <p class="text-[#64748B]">Track and manage your project issues</p>  
+                    <p class="text-[#64748B]">Track and manage your project issues</p>
                 </div>
             </div>
-                <div class="flex flex-row  md:justify-center justify-end items-center space-x-2">
-                    <p class="rounded-full bg-green-700 p-2 w-4 h-4"></p><span>Open</span>
-                    <p class="rounded-full bg-purple-800 p-2 w-4 h-4 "></p><span>Close</span>
-                </div>
+            <div class="flex flex-row  md:justify-center justify-end items-center space-x-2">
+                <p class="rounded-full bg-green-700 p-2 w-4 h-4"></p><span>Open</span>
+                <p class="rounded-full bg-purple-800 p-2 w-4 h-4 "></p><span>Close</span>
+            </div>
         </div>
     </section>
 
+    <section id="spiner" class="flex items-center justify-center my-28 hidden">
+    <span class="loading loading-dots loading-xl"></span>
+    </section>
     <!-- card section -->
-     <section id="all-card-section" class=" grid grid-cols-4 md:w-7/10 mx-auto gap-3 p-4"></section>
+    <section id="all-card-section" class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:w-7/10 mx-auto gap-3 p-4"></section>
 
 
     <!-- card modal-->
-
-
     <!-- Open the modal using ID.showModal() method -->
-<dialog id="issue_modal" class="modal">
-  <div class="modal-box w-9/12 max-w-3xl">
-    <div id="modal-card"></div> <div class="modal-action">
-      <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-      </form>
-    </div>
-  </div>
-</dialog>
-<script src="index.js"></script>
+    <dialog id="issue_modal" class="modal">
+        <div class="modal-box w-9/12 max-w-3xl">
+            <div id="modal-card"></div>
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+    <script src="index.js"></script>
 </body>
 
 </html>
