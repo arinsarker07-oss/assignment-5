@@ -25,22 +25,36 @@ const BTNclick = (clickedbutton) => {
     allbutton.forEach(btt => {
         btt.classList.add("btn-soft")
     });
-    clickedbutton.classList.remove("btn-soft")
-    return;
+    clickedbutton.classList.remove("btn-soft") 
+
+const statusType = clickedbutton.innerText.toLowerCase().trim();
+    if (statusType === "all") {
+        displayLevelwords(allIssues);
+    } 
+    else if (statusType === "open") {
+        const openData = allIssues.filter(item => item.status === "open");
+        displayLevelwords(openData);
+    } 
+    else if (statusType === "close") {
+        const closedData = allIssues.filter(item => item.status === "closed");
+        displayLevelwords(closedData);
+    }
 }
 
 const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues"
 fetch(url)
     .then((response) => response.json())
-    .then((result) => displayLevelwords(result.data))
+    .then((result) =>{
+         allIssues = result.data
+        displayLevelwords(allIssues)
+    } )
 
 
 const displayLevelwords = (words) => {
     const allcardsection = document.getElementById("all-card-section");
     allcardsection.innerHTML = "";
-
+document.getElementById("issue-count").innerText = `${words.length} Issues`;
     words.forEach(word => {
-        console.log(word);
         const card = document.createElement("div");
         card.className = "h-full";
         const isopen = word.status === 'open';
@@ -48,13 +62,58 @@ const displayLevelwords = (words) => {
         const statusicon = isopen
             ? `<div class="h-4 w-4 rounded-full border-2 border-dashed border-green-600"></div>`
             : `<i class="fa-regular fa-circle-check text-lg text-purple-600"></i>`;
+
+        const ispriority = word.priority
+        let badgecolor = ""
+        if (ispriority === "high") {
+            badgecolor = `<div class="badge badge-error badge-soft text-[10px] font-bold uppercase">${word.priority}</div>`
+        }
+        else if (ispriority === "medium") {
+            badgecolor = `<div class="badge badge-warning badge-soft text-[10px] font-bold uppercase">${word.priority}</div>`
+        }
+        else {
+            badgecolor = `<div class="badge badge-Info badge-soft text-[10px] font-bold uppercase">${word.priority}</div>`
+        }
+        const islabel = word.labels.map(label => {
+            let eatchLable = ""
+            const cleanLabel = label.toLowerCase().trim();
+            
+            if (cleanLabel === "bug") {
+                eatchLable = ` <div class="badge badge-error badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
+                            <i class="fa-solid fa-bug"></i> BUG
+                        </div>`
+            }
+            else if (cleanLabel === "help wanted") {
+                eatchLable = ` <div class="badge badge-warning badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
+                           <i class="fa-solid fa-life-ring"></i>HELP WANTED
+                        </div>`
+            }
+            else if (cleanLabel === "enhancement") {
+                eatchLable = ` <div class="badge badge-success badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
+                           <i class="fa-solid fa-life-ring"></i>ENHANCEMENT
+                        </div>`
+            }
+            else if (cleanLabel === "good first issue") {
+                eatchLable = ` <div class="badge badge-info badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
+                           <i class="fa-solid fa-life-ring"></i>GOOD FIRST ISSUE
+                        </div>`
+            }
+            else {
+                eatchLable = ` <div class="badge badge-primary badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
+                           <i class="fa-solid fa-life-ring"></i>DOCUMENTATION
+                        </div>`
+            }
+             return eatchLable;
+        }).join("");
+
+
         card.innerHTML = `
             <div class="card bg-white shadow-sm border-t-4 border-${color}-500 h-full">
                 <figure class="flex justify-between p-4 pb-2">
                     <div class="h-7 w-7 rounded-full bg-${color}-100 flex items-center justify-center">
                        ${statusicon}
                     </div>
-                    <div class="badge badge-error badge-soft text-[10px] font-bold uppercase">${word.priority}</div>
+                   ${badgecolor}
                 </figure>
                 <div class="p-4 pt-0 space-y-2 flex-grow">
                     <h2 class="card-title font-semibold text-[#1F2937] text-sm leading-tight">
@@ -64,12 +123,7 @@ const displayLevelwords = (words) => {
                         ${word.description}
                     </p>
                     <div class="card-actions flex-wrap gap-1 mt-3">
-                        <div class="badge badge-error badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
-                            <i class="fa-solid fa-bug"></i> BUG
-                        </div>
-                        <div class="badge badge-warning badge-soft badge-sm text-[9px] gap-1 py-2 px-2 whitespace-nowrap">
-                           <i class="fa-solid fa-life-ring"></i>HELP WANTED
-                        </div>
+                    ${islabel}
                     </div>
                 </div>
                 <div class="p-4 pt-0">
@@ -82,3 +136,12 @@ const displayLevelwords = (words) => {
         allcardsection.append(card);
     });
 }
+
+document.getElementById("btn-Search").addEventListener("click",()=>{
+  const input=document.getElementById("input-Search")
+  const inputvalue= input.value.trim().toLowerCase();
+   const filterword=allIssues.filter((word)=>
+    word.title.toLowerCase().includes(inputvalue))
+     displayLevelwords(filterword)
+     return;
+});

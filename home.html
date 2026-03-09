@@ -42,18 +42,18 @@
                         <path d="m21 21-4.3-4.3"></path>
                     </g>
                 </svg>
-                <input type="search" required placeholder="Search issues..." />
+                <input id="input-Search" type="search" required placeholder="Search issues..." />
             </label>
-            <button class="btn btn-primary"><span><i class="fa-solid fa-plus"></i></span> New Issue</button>
+            <button class="btn btn-primary" id="btn-Search"><span><i class="fa-solid fa-magnifying-glass"></i></span>Search</button>
         </div>
     </div>
 
     <!-- btn-section -->
     <section class=" md:w-7/10 mx-auto w-full ">
         <div class="bg-base-100 shadow-sm justify-between mt-[60px] space-x-1 p-3 ">
-            <button onclick="BTNclick(this)" id="btn-all"  class="btn btn-w btn-primary btn-soft w-[100px]">all</button>
-            <button onclick="BTNclick(this)" id="btn-open" class="btn btn-w btn-primary btn-soft w-[100px]">open</button>
-            <button onclick="BTNclick(this)" id="btn-close" class="btn btn-w btn-primary btn-soft w-[100px]">close</button>
+            <button onclick="BTNclick(this)" id="btn-all"  class="btn btn-w btn-primary btn-soft w-[70px]">all</button>
+            <button onclick="BTNclick(this)" id="btn-open" class="btn btn-w btn-primary btn-soft w-[80px]">open</button>
+            <button onclick="BTNclick(this)" id="btn-close" class="btn btn-w btn-primary btn-soft w-[80px]">close</button>
         </div>
     </section>
 
@@ -65,7 +65,7 @@
                 <img class="h-9 w-9 " src="assets/Aperture.png" alt="">
                 </div>
                 <div>
-                    <a class=" font-semibold text-xl">50 Issues</a>
+                    <a id="issue-count" class="font-semibold text-xl">0 Issues</a>
                     <p class="text-[#64748B]">Track and manage your project issues</p>  
                 </div>
             </div>
